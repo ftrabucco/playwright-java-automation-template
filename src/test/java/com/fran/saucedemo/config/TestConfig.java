@@ -33,8 +33,16 @@ public final class TestConfig {
         return Boolean.parseBoolean(get("trace.enabled"));
     }
 
+    public static boolean traceAttachOnFailureOnly() {
+        return Boolean.parseBoolean(get("trace.attach.on.failure.only"));
+    }
+
     public static boolean screenshotOnFailure() {
         return Boolean.parseBoolean(get("screenshot.on.failure"));
+    }
+
+    public static boolean screenshotAlways() {
+        return Boolean.parseBoolean(get("screenshot.always"));
     }
 
     public static boolean videoEnabled() {

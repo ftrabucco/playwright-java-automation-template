@@ -7,8 +7,12 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Tracing;
 import java.nio.file.Path;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class PlaywrightSession implements AutoCloseable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlaywrightSession.class);
+
     private final Playwright playwright;
     private final Browser browser;
     private final BrowserContext context;
@@ -21,6 +25,12 @@ public final class PlaywrightSession implements AutoCloseable {
         this.context.setDefaultTimeout(TestConfig.timeoutMs());
         this.page = context.newPage();
 
+        LOGGER.debug(
+                "Created Playwright session baseUrl={} timeoutMs={} artifactsDirectory={}",
+                TestConfig.baseUrl(),
+                TestConfig.timeoutMs(),
+                artifactsDirectory);
+
         if (TestConfig.traceEnabled()) {
             this.context
                     .tracing()
@@ -29,6 +39,7 @@ public final class PlaywrightSession implements AutoCloseable {
                                     .setScreenshots(true)
                                     .setSnapshots(true)
                                     .setSources(true));
+            LOGGER.debug("Started Playwright tracing");
         }
     }
 
@@ -39,11 +50,13 @@ public final class PlaywrightSession implements AutoCloseable {
     public void stopTracing(Path tracePath) {
         if (TestConfig.traceEnabled()) {
             context.tracing().stop(new Tracing.StopOptions().setPath(tracePath));
+            LOGGER.debug("Stopped Playwright tracing tracePath={}", tracePath);
         }
     }
 
     @Override
     public void close() {
+        LOGGER.debug("Closing Playwright session");
         context.close();
         browser.close();
         playwright.close();
