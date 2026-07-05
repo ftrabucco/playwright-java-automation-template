@@ -169,6 +169,12 @@ To publish the latest Allure report to GitHub Pages, run the workflow manually a
 publish_report = true
 ```
 
+Before the first publication, enable GitHub Pages in the repository settings:
+
+```text
+Settings -> Pages -> Build and deployment -> Source: GitHub Actions
+```
+
 ## Template Usage
 
 To reuse this as a template for another app:
