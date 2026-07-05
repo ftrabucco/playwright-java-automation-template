@@ -66,6 +66,7 @@ Avoid tests depending on execution order.
 - Allow full-run screenshot/trace evidence through opt-in configuration.
 - Use retries only as a CI safety net, not as a replacement for fixing flaky tests.
 
+Parallel execution is documented in [parallel-execution.md](parallel-execution.md).
 Reporting trade-offs are documented in [reporting.md](reporting.md).
 
 ## Browser Strategy
