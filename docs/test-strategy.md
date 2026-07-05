@@ -62,8 +62,11 @@ Avoid tests depending on execution order.
 - Use Playwright locators and auto-waits instead of `Thread.sleep`.
 - Isolate browser context per test.
 - Keep tests independent.
-- Capture traces and screenshots for failed tests.
+- Capture screenshots and Playwright traces for failed tests by default.
+- Allow full-run screenshot/trace evidence through opt-in configuration.
 - Use retries only as a CI safety net, not as a replacement for fixing flaky tests.
+
+Reporting trade-offs are documented in [reporting.md](reporting.md).
 
 ## Browser Strategy
 

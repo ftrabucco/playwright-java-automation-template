@@ -17,7 +17,7 @@ Reusable E2E automation framework built with Java, Playwright and JUnit 5. Sauce
 - Tag-based execution for smoke/regression slicing.
 - Allure-ready reporting with screenshots and Playwright traces on failures.
 - CI workflow with Maven cache, browser matrix and artifact upload.
-- Documentation for architecture, test strategy and test authoring.
+- Documentation for architecture, reporting, test strategy and test authoring.
 
 ## Tech Stack
 
@@ -127,6 +127,8 @@ python3 -m http.server 8080 --directory target/site/allure-maven-plugin
 
 Then browse to `http://localhost:8080`.
 
+Reporting trade-offs are documented in [docs/reporting.md](docs/reporting.md).
+
 ## Configuration
 
 Default values live in `src/test/resources/config.properties`.
@@ -137,7 +139,9 @@ browser=chromium
 headless=true
 timeout.ms=10000
 trace.enabled=true
+trace.attach.on.failure.only=true
 screenshot.on.failure=true
+screenshot.always=false
 ```
 
 Any value can be overridden with Maven:
@@ -145,6 +149,33 @@ Any value can be overridden with Maven:
 ```bash
 mvn test -Dbrowser=webkit -Dheadless=false
 ```
+
+Attach a screenshot for every test:
+
+```bash
+mvn test -Dscreenshot.always=true
+```
+
+Attach Playwright traces for every test instead of failures only:
+
+```bash
+mvn test -Dtrace.attach.on.failure.only=false
+```
+
+## Logging
+
+Console logging is intentionally concise by default. The framework prints one readable start/end
+line per test and keeps lower-level browser/session/artifact details at `debug` level because
+parallel test execution can interleave messages and make verbose output hard to read.
+
+Run with debug logs when investigating framework internals locally:
+
+```bash
+mvn test -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+```
+
+For regular debugging, prefer Allure attachments, screenshots and Playwright traces as the main
+evidence.
 
 ## How To Add A New Test
 
@@ -183,6 +214,18 @@ To reuse this as a template for another app:
 2. Change `base.url` in `config.properties`.
 3. Keep `core`, `config`, `utils` and the overall test architecture.
 4. Replace `pages`, `components`, `fixtures` and `tests` with the target product model.
+
+## Portfolio Notes
+
+This project is intended to demonstrate SDET/QA Automation framework design, not only UI scripting. It highlights:
+
+- maintainable Page Object and Component Object modeling
+- isolated browser sessions for parallel execution
+- configurable browser, trace, screenshot and report behavior
+- Allure reporting with debugging evidence
+- GitHub Actions CI with cross-browser matrix execution
+- quality gates with Maven Enforcer and Spotless
+- documentation of architectural and reporting trade-offs
 
 ## Test Strategy
 
