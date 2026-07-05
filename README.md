@@ -1,5 +1,11 @@
 # Playwright Java Test Automation Framework
 
+[![E2E Tests](https://github.com/ftrabucco/playwright-java-automation-template/actions/workflows/e2e.yml/badge.svg)](https://github.com/ftrabucco/playwright-java-automation-template/actions/workflows/e2e.yml)
+![Java](https://img.shields.io/badge/Java-17%2B-blue)
+![Playwright](https://img.shields.io/badge/Playwright-Java-45ba4b)
+![JUnit 5](https://img.shields.io/badge/JUnit-5-25a162)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
 Reusable E2E automation framework built with Java, Playwright and JUnit 5. SauceDemo is used as the sample application, but the framework is structured as a template that can be adapted to other web products.
 
 ## Highlights
@@ -110,8 +116,16 @@ mvn test -Dbrowser=firefox
 Generate an Allure report:
 
 ```bash
-mvn allure:serve
+mvn allure:report
 ```
+
+Open it locally:
+
+```bash
+python3 -m http.server 8080 --directory target/site/allure-maven-plugin
+```
+
+Then browse to `http://localhost:8080`.
 
 ## Configuration
 
@@ -148,6 +162,12 @@ More detail: [docs/how-to-add-tests.md](docs/how-to-add-tests.md)
 The GitHub Actions workflow runs the suite in CI and uploads Allure/Playwright artifacts:
 
 [.github/workflows/e2e.yml](.github/workflows/e2e.yml)
+
+To publish the latest Allure report to GitHub Pages, run the workflow manually and set:
+
+```text
+publish_report = true
+```
 
 ## Template Usage
 
