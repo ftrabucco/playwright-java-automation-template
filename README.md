@@ -107,11 +107,25 @@ Run headed with slow motion:
 mvn test -Dheadless=false -Dslow.motion.ms=150
 ```
 
+Run with a fixed number of parallel workers:
+
+```bash
+mvn test -Djunit.jupiter.execution.parallel.config.strategy=fixed -Djunit.jupiter.execution.parallel.config.fixed.parallelism=2
+```
+
+Run one selected test with the browser visible:
+
+```bash
+mvn test -Dtest=LoginTest#standardUserCanLogIn -Dheadless=false -Dslow.motion.ms=250 -Djunit.jupiter.execution.parallel.enabled=false
+```
+
 Run with another browser:
 
 ```bash
 mvn test -Dbrowser=firefox
 ```
+
+Parallel execution is documented in [docs/parallel-execution.md](docs/parallel-execution.md).
 
 Generate an Allure report:
 
